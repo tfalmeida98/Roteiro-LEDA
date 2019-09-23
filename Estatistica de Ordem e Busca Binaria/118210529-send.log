@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2019-09-05T16:12:07.105-0300</date>
+  <logger>THIAGO FARIAS DE ALMEIDA</logger>
+  <level>FINE</level>
+  <message>File 118210529-THIAGO FARIAS DE ALMEIDA.zip was received. It was sent by THIAGO FARIAS DE ALMEIDA from IP 150.165.42.211 at 05-09-2019 16*12*07</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2019-09-05T21:35:25.184-0300</date>
+  <logger>THIAGO FARIAS DE ALMEIDA</logger>
+  <level>FINE</level>
+  <message>File 118210529-THIAGO FARIAS DE ALMEIDA.zip was received. It was sent by THIAGO FARIAS DE ALMEIDA from IP 10.0.0.106 at 05-09-2019 21*35*25</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2019-09-05T22:03:15.376-0300</date>
+  <logger>THIAGO FARIAS DE ALMEIDA</logger>
+  <level>FINE</level>
+  <message>File 118210529-THIAGO FARIAS DE ALMEIDA.zip was received. It was sent by THIAGO FARIAS DE ALMEIDA from IP 10.0.0.106 at 05-09-2019 22*03*15</message>
+</record>
