@@ -1,0 +1,60 @@
+package adt.queue;
+
+import adt.linkedList.DoubleLinkedList;
+import adt.linkedList.DoubleLinkedListImpl;
+import adt.linkedList.SingleLinkedListImpl;
+import adt.linkedList.SingleLinkedListNode;
+
+public class QueueDoubleLinkedListImpl<T> implements Queue<T> {
+
+	protected DoubleLinkedList<T> list;
+	protected int size;
+
+	public QueueDoubleLinkedListImpl(int size) {
+		this.size = size;
+		this.list = new DoubleLinkedListImpl<T>();
+	}
+
+	@Override
+	public void enqueue(T element) throws QueueOverflowException {
+		if (! isFull()) 
+			list.insert(element);
+		else
+			throw new QueueOverflowException();
+	}
+
+	@Override
+	public T dequeue() throws QueueUnderflowException {
+		if (!isEmpty()) {
+			SingleLinkedListImpl singleList = (SingleLinkedListImpl) list;
+			SingleLinkedListNode head = singleList.getHead();
+			list.removeFirst();
+			return (T) head.getData();
+		}else
+			throw new QueueUnderflowException();
+	}
+
+	@Override
+	public T head() {
+		T retorno = null;
+		if (! isEmpty()) {
+		SingleLinkedListImpl singleList = (SingleLinkedListImpl) list;
+		SingleLinkedListNode head = singleList.getHead();
+		retorno = (T) head.getData();
+		}
+		
+		return retorno;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return list.isEmpty();
+	}
+
+	@Override
+	public boolean isFull() {
+		SingleLinkedListImpl singleList = (SingleLinkedListImpl) list;
+		return (singleList.getSize() == size);
+	}
+
+}
