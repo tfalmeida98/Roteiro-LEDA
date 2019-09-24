@@ -91,13 +91,15 @@ public class SingleLinkedListImpl<T> implements LinkedList<T> {
 
    @Override
    public T[] toArray() {
+
       ArrayList<T> arrayList = new ArrayList<T>();
 
-      SingleLinkedListNode<T> auxHead = head;
+      SingleLinkedListNode<T> node = getHead();
 
-      while (!auxHead.isNIL()) {
-         arrayList.add(auxHead.getData());
-         auxHead = auxHead.getNext();
+      while (!node.isNIL()) {
+         arrayList.add(node.getData());
+         node = (SingleLinkedListNode<T>)node.getNext();
+         System.out.println(!node.isNIL());
       }
       T[] array = (T[]) arrayList.toArray();
       return array;

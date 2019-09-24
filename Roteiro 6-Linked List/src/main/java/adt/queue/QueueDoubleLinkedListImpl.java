@@ -1,6 +1,7 @@
 package adt.queue;
 
 import adt.linkedList.DoubleLinkedList;
+import adt.linkedList.DoubleLinkedListNode;
 import adt.linkedList.DoubleLinkedListImpl;
 import adt.linkedList.SingleLinkedListImpl;
 import adt.linkedList.SingleLinkedListNode;
@@ -26,8 +27,7 @@ public class QueueDoubleLinkedListImpl<T> implements Queue<T> {
 	@Override
 	public T dequeue() throws QueueUnderflowException {
 		if (!isEmpty()) {
-			SingleLinkedListImpl singleList = (SingleLinkedListImpl) list;
-			SingleLinkedListNode head = singleList.getHead();
+			SingleLinkedListNode<T> head =(SingleLinkedListNode) ((SingleLinkedListImpl<T>) list).getHead();
 			list.removeFirst();
 			return (T) head.getData();
 		}else
@@ -38,9 +38,8 @@ public class QueueDoubleLinkedListImpl<T> implements Queue<T> {
 	public T head() {
 		T retorno = null;
 		if (! isEmpty()) {
-		SingleLinkedListImpl singleList = (SingleLinkedListImpl) list;
-		SingleLinkedListNode head = singleList.getHead();
-		retorno = (T) head.getData();
+			SingleLinkedListNode<T> head =(SingleLinkedListNode) ((SingleLinkedListImpl<T>) list).getHead();
+			retorno = (T) head.getData();
 		}
 		
 		return retorno;
@@ -53,8 +52,13 @@ public class QueueDoubleLinkedListImpl<T> implements Queue<T> {
 
 	@Override
 	public boolean isFull() {
-		SingleLinkedListImpl singleList = (SingleLinkedListImpl) list;
-		return (singleList.getSize() == size);
+		return (((SingleLinkedListImpl<T>) list).getSize() == size);
+	}
+	
+	public static void main (String[] args) {
+		QueueDoubleLinkedListImpl<Integer> fila = new QueueDoubleLinkedListImpl<Integer>(3);
+		fila.enqueue(3);
+		
 	}
 
 }

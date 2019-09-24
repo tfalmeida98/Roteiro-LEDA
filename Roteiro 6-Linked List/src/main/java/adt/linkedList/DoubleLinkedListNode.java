@@ -19,5 +19,6 @@ public class DoubleLinkedListNode<T> extends SingleLinkedListNode<T> {
 	public void setPrevious(DoubleLinkedListNode<T> previous) {
 		this.previous = previous;
 	}
+	
 
 }
