@@ -34,7 +34,7 @@ public class SingleLinkedListImpl<T> implements LinkedList<T> {
                elementFinded = auxHead.getData();
                break;
             }
-            auxHead = auxHead.getNext();
+            auxHead = auxHead.getNext(); 
          }
 
       }
@@ -99,7 +99,6 @@ public class SingleLinkedListImpl<T> implements LinkedList<T> {
       while (!node.isNIL()) {
          arrayList.add(node.getData());
          node = (SingleLinkedListNode<T>)node.getNext();
-         System.out.println(!node.isNIL());
       }
       T[] array = (T[]) arrayList.toArray();
       return array;
