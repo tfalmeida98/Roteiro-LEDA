@@ -1,7 +1,5 @@
 package adt.bst.extended;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -95,5 +93,6 @@ public class SortComparatorBSTImpl<T extends Comparable<T>> extends BSTImpl<T> i
          insert((BSTNode<T>) node.getLeft(), element);
 
    }
+   
 
 }
