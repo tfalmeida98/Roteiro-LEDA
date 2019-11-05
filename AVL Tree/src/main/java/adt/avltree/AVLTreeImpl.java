@@ -2,6 +2,7 @@ package adt.avltree;
 
 import adt.bst.BSTImpl;
 import adt.bst.BSTNode;
+import adt.bt.Util;
 
 /**
  * 
@@ -11,8 +12,7 @@ import adt.bst.BSTNode;
  *
  * @param <T>
  */
-public class AVLTreeImpl<T extends Comparable<T>> extends BSTImpl<T> implements
-		AVLTree<T> {
+public class AVLTreeImpl<T extends Comparable<T>> extends BSTImpl<T> implements AVLTree<T> {
 
 	// TODO Do not forget: you must override the methods insert and remove
 	// conveniently.
@@ -20,70 +20,68 @@ public class AVLTreeImpl<T extends Comparable<T>> extends BSTImpl<T> implements
 	// AUXILIARY
 	protected int calculateBalance(BSTNode<T> node) {
 		int retorno = 0;
-		BSTNode<T> left = (BSTNode<T>) node.getLeft();
-		BSTNode<T> right = (BSTNode<T>) node.getRight();
-		if (left != null && right != null)
-			retorno = ( getHeight((BSTNode<T>) node.getLeft()) - getHeight((BSTNode<T>) node.getRight()));
-		else if (right != null)
-			retorno = - getHeight((BSTNode<T>) node.getRight());
-		else if (left != null)
-			retorno = getHeight((BSTNode<T>) node.getLeft());
-		
+		if (node != null && !node.isEmpty()) {
+			BSTNode<T> left = (BSTNode<T>) node.getLeft();
+			BSTNode<T> right = (BSTNode<T>) node.getRight();
+
+				retorno = (getHeight(left) - getHeight(right));
+		}
 		return retorno;
 	}
 
 	// AUXILIARY
 	protected void rebalance(BSTNode<T> node) {
-		BSTNode<T> left = (BSTNode<T>) node.getLeft();
-		BSTNode<T> right = (BSTNode<T>) node.getRight();
-		if (calculateBalance(node) > 1) {
-			if (left != null && calculateBalance(left) >= 1 ) {
-				leftRotation(node);
-			} else if (left != null && calculateBalance(left) <= -1 ) {
+
+		int balance = calculateBalance(node);
+		if (balance > 1) {
+			BSTNode<T> left = (BSTNode<T>) node.getLeft();
+			if (calculateBalance(left) < 0) {
 				leftRotation(left);
-				rightRotation(node);
 			}
-				
-		}else if(calculateBalance(node) < -1) {
-			if (right != null && calculateBalance(right) <= -1) {
-				rightRotation(node);
-			} else if(right != null && calculateBalance(right) >= 1) {
-				rightRotation(right);
-				leftRotation(node);
-			}
+
+			rightRotation(node);
 		}
-		
+
+		else if (balance < -1) {
+			BSTNode<T> right = (BSTNode<T>) node.getRight();
+			if (calculateBalance(right) > 0) {
+				rightRotation(right);
+
+			}
+
+			leftRotation(node);
+		}
+
 	}
-	
+
 	private void leftRotation(BSTNode<T> node) {
-		BSTNode<T> pivot = (BSTNode<T>) node.getLeft();
-		node.setRight(pivot.getLeft());
-		pivot.setLeft(node);
-		node = pivot;
+		BSTNode<T> aux = Util.leftRotation(node);
+		if (aux.getParent().isEmpty()) {
+			root = aux;
+		}
 	}
-	
+
 	private void rightRotation(BSTNode<T> node) {
-		BSTNode<T> pivot = (BSTNode<T>) node.getRight();
-		node.setLeft(pivot.getRight());
-		pivot.setRight(node);
-		node = pivot;
+		BSTNode<T> aux = Util.rightRotation(node);
+		if (aux.getParent().isEmpty()) {
+			root = aux;
+		}
 	}
 
 	// AUXILIARY
 	protected void rebalanceUp(BSTNode<T> node) {
 		BSTNode<T> parent = (BSTNode<T>) node.getParent();
-		if (!node.isEmpty())
-			rebalance(node);
-		if(parent != null)
-			rebalanceUp(parent);
+		while (!parent.isEmpty()) {
+			rebalance(parent);
+			parent = (BSTNode<T>) parent.getParent();
+		}
 	}
-	
+
 	@Override
 	public void insert(T element) {
 		insert(root, element);
 	}
-	
-	
+
 	private void insert(BSTNode<T> node, T element) {
 		if (node.isEmpty()) {
 			node.setData(element);
@@ -91,6 +89,7 @@ public class AVLTreeImpl<T extends Comparable<T>> extends BSTImpl<T> implements
 			node.setRight(new BSTNode());
 			node.getLeft().setParent(node);
 			node.getRight().setParent(node);
+			rebalanceUp(node);
 
 		}
 		if (node.getData().compareTo(element) < 0)
@@ -98,13 +97,12 @@ public class AVLTreeImpl<T extends Comparable<T>> extends BSTImpl<T> implements
 		if (node.getData().compareTo(element) > 0)
 			insert((BSTNode<T>) node.getLeft(), element);
 
-		rebalanceUp(node);
+		
 	}
-	
+
 	@Override
 	public void remove(T element) {
 		BSTNode<T> node = search(element);
-
 
 		if (!node.isEmpty()) {
 			if (node.isLeaf()) {
@@ -113,7 +111,6 @@ public class AVLTreeImpl<T extends Comparable<T>> extends BSTImpl<T> implements
 				node.setRight(null);
 				rebalanceUp(node);
 
-				
 			} else if (node.getRight().isEmpty() || node.getLeft().isEmpty()) {
 				BSTNode<T> parent = (BSTNode<T>) node.getParent();
 
@@ -149,11 +146,11 @@ public class AVLTreeImpl<T extends Comparable<T>> extends BSTImpl<T> implements
 				T sucessor = sucessor(node.getData()).getData();
 				remove(sucessor);
 				node.setData(sucessor);
+				rebalanceUp(node);
 			}
 		}
 	}
-	
-	
+
 	@Override
 	public int height() {
 		return getHeight(root) - 1;
@@ -164,6 +161,7 @@ public class AVLTreeImpl<T extends Comparable<T>> extends BSTImpl<T> implements
 		int altura = 0;
 		int alturaDireita = 0;
 		int alturaEsquerda = 0;
+
 		if (!node.isEmpty()) {
 			alturaDireita = getHeight((BSTNode<T>) node.getRight());
 			alturaEsquerda = getHeight((BSTNode<T>) node.getLeft());
@@ -175,6 +173,5 @@ public class AVLTreeImpl<T extends Comparable<T>> extends BSTImpl<T> implements
 		}
 		return altura;
 	}
-	
-	
+
 }
