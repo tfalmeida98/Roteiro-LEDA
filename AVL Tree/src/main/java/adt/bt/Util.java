@@ -12,23 +12,24 @@ public class Util {
 	 */
 	public static <T extends Comparable<T>> BSTNode<T> leftRotation(BSTNode<T> node) {
 		BSTNode<T> parent = (BSTNode<T>) node.getParent();
-		BSTNode<T> son = (BSTNode<T>) node.getRight();
+		BSTNode<T> right = (BSTNode<T>) node.getRight();
 		if (!parent.isEmpty()) {
 			if (parent.getLeft().equals(node)) {
-				parent.setLeft(son);
+				parent.setLeft(right);
 			} else {
-				parent.setRight(son);
+				parent.setRight(right);
 			}
 		}
-		node.setParent(son);
-		BSTNode<T> sonOfSonLeft = (BSTNode<T>) son.getLeft();
-		node.setRight(sonOfSonLeft);
-		if (!sonOfSonLeft.isEmpty()) {
-			sonOfSonLeft.setParent(node);
-		}
-		son.setParent(parent);
-		son.setLeft(node);
-		return son;
+		
+		BSTNode<T> leftChildRight = (BSTNode<T>) right.getLeft();
+		node.setParent(right);
+		node.setRight(leftChildRight);
+		if (!leftChildRight.isEmpty()) 
+			leftChildRight.setParent(node);
+		
+		right.setParent(parent);
+		right.setLeft(node);
+		return right;
 	}
 
 	/**
@@ -39,23 +40,24 @@ public class Util {
 	 */
 	public static <T extends Comparable<T>> BSTNode<T> rightRotation(BSTNode<T> node) {
 		BSTNode<T> parent = (BSTNode<T>) node.getParent();
-		BSTNode<T> son = (BSTNode<T>) node.getLeft();
+		BSTNode<T> left = (BSTNode<T>) node.getLeft();
 		if (!parent.isEmpty()) {
 			if (parent.getLeft().equals(node)) {
-				parent.setLeft(son);
+				parent.setLeft(left);
 			} else {
-				parent.setRight(son);
-			}
+				parent.setRight(left);
+			} 
 		}
-		node.setParent(son);
-		BSTNode<T> sonOfSonRight = (BSTNode<T>) son.getRight();
-		node.setLeft(sonOfSonRight);
-		if (!sonOfSonRight.isEmpty()) {
-			sonOfSonRight.setParent(node);
-		}
-		son.setParent(parent);
-		son.setRight(node);
-		return son;
+		
+		BSTNode<T> rightChildLeft = (BSTNode<T>) left.getRight();
+		node.setParent(left);
+		node.setLeft(rightChildLeft);
+		if (!rightChildLeft.isEmpty()) 
+			rightChildLeft.setParent(node);
+		
+		left.setParent(parent);
+		left.setRight(node);
+		return left;
 	}
 
 

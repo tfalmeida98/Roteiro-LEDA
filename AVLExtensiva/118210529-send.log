@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2019-11-08T18:44:02.471-0300</date>
+  <logger>THIAGO FARIAS DE ALMEIDA</logger>
+  <level>FINE</level>
+  <message>File 118210529-THIAGO FARIAS DE ALMEIDA.zip was received. It was sent by THIAGO FARIAS DE ALMEIDA from IP 10.0.0.105 at 08-11-2019 18*44*02</message>
+</record>
